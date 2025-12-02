@@ -1,6 +1,6 @@
 # 🏠 Nigeria Housing Price Predictor (End-to-End MLOps)
 
-> **Note:** Replace `YOUR_USERNAME` in the badge link with your actual GitHub username.
+[![GitHub Actions CI](https://github.com/samuel-shaibu/nigeria-housing-mlops/actions/workflows/python-app.yml/badge.svg)](https://github.com/samuel-shaibu/nigeria-housing-mlops/actions)
 
 An end-to-end **Machine Learning Microservice** that predicts housing prices in Nigeria using real-world data.  
 This project demonstrates **production-grade MLOps practices**, including automated data pipelines, containerization, CI integration, and model deployment.
