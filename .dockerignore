@@ -1,0 +1,15 @@
+# Ignore the virtual environment (Crucial!)
+venv/
+env/
+
+# Ignore git metadata
+.git/
+.gitignore
+
+# Ignore pycache
+__pycache__/
+*.pyc
+
+# Ignore the data folder (Optional: usually we don't bake large data into the image)
+# For this specific project, we WILL keep data inside so the app works offline.
+# So do NOT ignore data/ for now.
