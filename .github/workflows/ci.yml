@@ -1,34 +1,56 @@
-name: MLOps Pipeline
+name: MLOps End-to-End Pipeline
 
-# We want to run it whenever the code is sent to 'main' branch
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
-# What job needs to be done
 jobs:
-  build-and-test:
-    # INDENTATION FIX: These lines must be inside 'build-and-test'
+  build-test-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # Step A: Download your code onto the server
+    # 1. Get Code
     - uses: actions/checkout@v3
 
-    # Step B: Install Python 3.12
+    # 2. Set up Python
     - name: Set up Python 3.12
       uses: actions/setup-python@v3
       with:
         python-version: "3.12"
 
-    # Step C: Install the tools
+    # 3. Install Dependencies
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pytest
+        pip install pylint pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    # Step D: Run the test
-    - name: Run Tests
+    # 4. Linting (Quality Check)
+    # Uses --exit-zero so it warns you but doesn't crash the build (good for starting out)
+    - name: Lint with Pylint
+      run: |
+        pylint app/main.py model_development/train_model.py --exit-zero
+
+    # 5. Testing (Functionality Check)
+    - name: Run Unit Tests
       run: |
         pytest
+
+    # 6. Build & Push Docker Image (Only on main branch)
+    - name: Login to Docker Hub
+      if: github.ref == 'refs/heads/main'
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and Push Docker Image
+      if: github.ref == 'refs/heads/main'
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        # This tags the image with your Docker Hub username
+        tags: ${{ secrets.DOCKER_USERNAME }}/housing-predictor:latest
