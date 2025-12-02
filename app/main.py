@@ -17,6 +17,10 @@ try:
 except Exception as e:
     print(f"Error loading model: {e}")
 
+@app.route('/')
+def home():
+    return "Nigeria Housing Price Predictor is Live!"
+
 # The API aspect
 @app.route('/predict', methods=['POST'])
 def predict():
