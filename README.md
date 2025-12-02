@@ -1,9 +1,3 @@
-Here you go — a clean, ready-to-copy **README.md** version of your text (proper Markdown formatting, code blocks, diagram, headings, emojis, and structure preserved).
-Just copy and paste this into your `README.md` file.
-
----
-
-````markdown
 # 🏠 Nigeria Housing Price Predictor (End-to-End MLOps)
 
 > **Note:** Replace `YOUR_USERNAME` in the badge link with your actual GitHub username.
