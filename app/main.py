@@ -45,6 +45,8 @@ def predict():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-if __name__ == "__main__":
-    # Run on host 0.0.0.0 and port 5000
-    app.run(host='0.0.0.0', port=5000, debug=True)
+if __name__ == '__main__':
+    # Hugging Face Spaces defaults to port 7860, allows overriding via PORT 
+    import os
+    port = int(os.environ.get('PORT', 7860))
+    app.run(host='0.0.0.0', port=port)
