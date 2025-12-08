@@ -1,3 +1,12 @@
+---
+title: Nigeria Housing Price Predictor
+emoji: House
+colorFrom: green
+colorTo: yellow
+sdk: docker
+pinned: false
+---
+
 # Nigeria Housing Price Predictor (End-to-End MLOps)
 
 [![GitHub Actions CI](https://github.com/samuel-shaibu/nigeria-housing-mlops/actions/workflows/python-app.yml/badge.svg)](https://github.com/samuel-shaibu/nigeria-housing-mlops/actions)
@@ -26,85 +35,135 @@ graph LR
     H --> I[Run Pytest]
     I -->|Pass| J[Build Docker Image]
     end
+````
 
-Tech Stack
-Core
+---
 
-Python 3.12
-Pandas
-Scikit-Learn (Pipelines)
+## 🛠 Tech Stack
 
-API
+### **Core**
 
-Flask (RESTful Microservice)
+* Python 3.12
+* Pandas
+* Scikit-Learn (Pipelines)
 
-Containerization
+### **API**
 
-Docker (Multi-stage builds, Slim images)
+* Flask (RESTful Microservice)
 
-CI/CD
+### **Containerization**
 
-GitHub Actions (Automated Testing)
+* Docker (Multi-stage builds, Slim images)
 
-Environment
+### **CI/CD**
 
-WSL 2 (Ubuntu Linux)
+* GitHub Actions (Automated Testing)
 
+### **Environment**
 
-Quick Start
-You can run this project using Docker (recommended) or directly via Python.
-Option 1: Using Docker (Production Simulation)
-# Build the container
+* WSL 2 (Ubuntu Linux)
+
+---
+
+## 🚀 Quick Start
+
+You can run this project using **Docker (recommended)** or directly via **Python**.
+
+---
+
+### **Option 1: Using Docker (Production Simulation)**
+
+Ensure Docker Desktop is running.
+
+```bash
+# 1. Build the lightweight container
 docker build -t housing-predictor .
 
-# Run the container
+# 2. Run the container (Maps port 5000)
 docker run -p 5000:5000 housing-predictor
-Option 2: Local Python Environment (Development)
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
+---
+
+### **Option 2: Local Python Environment (Development)**
+
+```bash
+# 1. Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# 2. Install dependencies
 pip install -r requirements.txt
 
-# Train the model (creates model.pkl)
+# 3. Train the model (Generates the .pkl artifact)
 python model_development/train_model.py
 
-# Start the API
+# 4. Start the API server
 python app/main.py
-The API will be available at http://localhost:5000
+```
 
-API Usage
-Endpoint
+---
+
+## ⚡ API Usage
+
+Once the server is running at **[http://localhost:5000](http://localhost:5000)**, you can request predictions.
+
+### **Endpoint**
+
+```
 POST /predict
-Example Request (JSON payload)
-{
-  "bedrooms": 4,
-  "bathrooms": 4,
-  "toilets": 5,
-  "parking_space": 3,
-  "town": "Lekki",
-  "state": "Lagos"
-}
-Example Response
-{
-  "formatted_price": "₦ 112,655,283.33",
-  "predicted_price": 112655283.33379728,
-  "status": "success"
-}
+```
 
-Project Structure
+---
+
+### **Example Request (cURL)**
+
+```bash
+curl -X POST http://127.0.0.1:5000/predict \
+     -H "Content-Type: application/json" \
+     -d '{"bedrooms": 4, "bathrooms": 4, "toilets": 5, "parking_space": 3, "town": "Lekki", "state": "Lagos"}'
+```
+
+---
+
+### **Example Response**
+
+```json
+{
+    "formatted_price": "₦ 112,655,283.33",
+    "predicted_price": 112655283.33379728,
+    "status": "success"
+}
+```
+
+---
+
+## 📂 Project Structure
+
+```
 nigeria-housing-mlops/
-├── .github/workflows/    # CI/CD Pipeline
-├── app/
-│   └── main.py           # Flask API
-├── data/                 # Local data (gitignored)
-├── model_development/
-│   └── train_model.py
-├── tests/
-│   └── test_app.py
-├── Dockerfile
-├── requirements.txt
-└── README.md
+├── .github/workflows/    # CI/CD Pipeline Configuration
+├── app/                  # Flask Production App
+│   └── main.py           # API Entry Point
+├── data/                 # Local Data Storage (Ignored by Git)
+├── model_development/    # Data Science Environment
+│   └── train_model.py    # Training & Serialization Script
+├── tests/                # Automated Tests
+│   └── test_app.py       # API Integration Tests
+├── Dockerfile            # Container Instructions
+├── requirements.txt      # Dependency Lockfile
+└── README.md             # Project Documentation
+```
 
-Testing
+---
+
+## 🧪 Testing
+
+Run automated tests using **pytest**:
+
+```bash
 pytest
-Enjoy predicting housing prices across Nigeria!
+```
+
+---
+
