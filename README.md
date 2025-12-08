@@ -1,6 +1,6 @@
 ---
 title: Nigeria Housing Price Predictor
-emoji: House
+emoji: 🏠
 colorFrom: green
 colorTo: yellow
 sdk: docker
@@ -29,7 +29,7 @@ graph LR
     C -->|Serialize| D[Model Artifact .pkl]
     D -->|Load| E[Flask Microservice]
     E -->|Dockerize| F[Production Container]
-    
+   
     subgraph CI_CD [GitHub Actions Pipeline]
     G[Push Code] --> H[Install Dependencies]
     H --> I[Run Pytest]
